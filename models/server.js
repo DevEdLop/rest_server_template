@@ -5,6 +5,9 @@ import 'colors';
 
 import { PORT_RESTSERVER } from '../config/config.js';
 import userRouter from '../routes/user.routes.js';
+import categoriasRouter from '../routes/categorias.routes.js';
+import authRouter from '../routes/auth.routes.js';
+import { dbConection } from '../db/configdb.js';
 
 export class Server {
     constructor() {
@@ -12,13 +15,28 @@ export class Server {
         this.port = PORT_RESTSERVER
         this.port_console = `${this.port}`.blue
 
-        this.usuariosPath = '/api/usuarios';
+        this.paths = {
+            auth: '/api/auth',
+            categorias: '/api/categorias',
+            usuarios: '/api/usuarios',
+        }
+
+        /*   this.usuariosPath = '/api/usuarios';
+          this.authPath = '/api/auth'; */
+
+        // Conectar a la base de datos
+        this.conectarDB()
 
         // Middlewares
         this.middlewares()
 
         // Rutas de mi aplicacion
         this.routes()
+    }
+
+
+    async conectarDB() {
+        await dbConection();
     }
 
     middlewares() {
@@ -30,8 +48,11 @@ export class Server {
         this.app.use(express.static('public'))
 
     }
+
     routes() {
-        this.app.use(this.usuariosPath, userRouter)
+        this.app.use(this.paths.auth, authRouter)
+        this.app.use(this.paths.categorias, categoriasRouter)
+        this.app.use(this.paths.usuarios, userRouter)
     }
 
     run() {
