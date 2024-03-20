@@ -3,7 +3,13 @@ import { check } from 'express-validator';
 
 
 import { validarCampos, validarJWT } from '../middlewares/index.js';
-import { actualizarCategoria, crearCategoria, eliminarCategoria, obtenerCategoria, obtenerCategorias } from '../controllers/categorias.controller.js';
+import {
+    actualizarCategoria,
+    crearCategoria,
+    eliminarCategoria,
+    obtenerCategoria,
+    obtenerCategorias
+} from '../controllers/categorias.controller.js';
 import { validateCategoryById } from '../helpers/db-validators.js';
 
 

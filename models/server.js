@@ -4,10 +4,13 @@ import 'colors';
 
 
 import { PORT_RESTSERVER } from '../config/config.js';
-import userRouter from '../routes/user.routes.js';
-import categoriasRouter from '../routes/categorias.routes.js';
-import authRouter from '../routes/auth.routes.js';
 import { dbConection } from '../db/configdb.js';
+
+import authRouter from '../routes/auth.routes.js';
+import buscarRouter from '../routes/buscar.routes.js';
+import categoriaRouter from '../routes/categorias.routes.js';
+import productoRouter from '../routes/productos.routes.js';
+import userRouter from '../routes/user.routes.js';
 
 export class Server {
     constructor() {
@@ -17,12 +20,12 @@ export class Server {
 
         this.paths = {
             auth: '/api/auth',
+            buscar: '/api/buscar',
             categorias: '/api/categorias',
+            productos: '/api/productos',
             usuarios: '/api/usuarios',
         }
 
-        /*   this.usuariosPath = '/api/usuarios';
-          this.authPath = '/api/auth'; */
 
         // Conectar a la base de datos
         this.conectarDB()
@@ -51,7 +54,9 @@ export class Server {
 
     routes() {
         this.app.use(this.paths.auth, authRouter)
-        this.app.use(this.paths.categorias, categoriasRouter)
+        this.app.use(this.paths.buscar, buscarRouter)
+        this.app.use(this.paths.categorias, categoriaRouter)
+        this.app.use(this.paths.productos, productoRouter)
         this.app.use(this.paths.usuarios, userRouter)
     }
 

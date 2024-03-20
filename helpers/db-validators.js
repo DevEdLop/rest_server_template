@@ -1,4 +1,9 @@
-import { Categoria, Role, Usuario } from '../models/index.js'
+import {
+    Categoria,
+    Producto,
+    Usuario,
+    Role
+} from '../models/index.js'
 
 export const validateRoleDB = async (rol = '') => {
     const existRol = await Role.findOne({ rol })
@@ -21,10 +26,15 @@ export const validateUserByIdDB = async (id) => {
     }
 }
 export const validateCategoryById = async (id) => {
-    console.log("🚀 ~ validateCategoryById ~ id:", id)
     const isExistCategory = await Categoria.findById(id)
-    console.log("🚀 ~ validateCategoryById ~ isExistCategory:", isExistCategory)
     if (!isExistCategory) {
         throw new Error(`No existe una categoria con este Id: ${id}`)
+    }
+}
+
+export const validateProductoById = async (id) => {
+    const isExistProducto = await Producto.findById(id)
+    if (!isExistProducto) {
+        throw new Error(`No existe un producto con este Id: ${id}`)
     }
 }
